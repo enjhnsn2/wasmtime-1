@@ -351,6 +351,17 @@ impl Config {
         self
     }
 
+    /// Configures whether Wasmtime should perform a veriwasm verification pass
+    ///
+    /// The default value for this is `false`
+    pub fn enable_veriwasm(&mut self, enable: bool) -> &mut Self {
+        let val = if enable { "true" } else { "false" };
+        self.flags
+            .set("enable_nan_canonicalization", val)
+            .expect("should be valid flag");
+        self
+    }
+
     /// Allows settings another Cranelift flag defined by a flag name and value. This allows
     /// fine-tuning of Cranelift settings.
     ///
