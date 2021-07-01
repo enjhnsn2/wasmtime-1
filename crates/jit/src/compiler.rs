@@ -40,11 +40,12 @@ pub struct Compiler {
     compiler: Box<dyn EnvCompiler>,
     strategy: CompilationStrategy,
     tunables: Tunables,
+    veriwasm: bool,
 }
 
 impl Compiler {
     /// Construct a new `Compiler`.
-    pub fn new(isa: Box<dyn TargetIsa>, strategy: CompilationStrategy, tunables: Tunables) -> Self {
+    pub fn new(isa: Box<dyn TargetIsa>, strategy: CompilationStrategy, tunables: Tunables, veriwasm: bool) -> Self {
         Self {
             isa,
             strategy,
@@ -56,6 +57,7 @@ impl Compiler {
                 CompilationStrategy::Lightbeam => Box::new(wasmtime_lightbeam::Lightbeam),
             },
             tunables,
+            veriwasm,
         }
     }
 }
@@ -95,6 +97,11 @@ impl Compiler {
     /// Return the isa.
     pub fn isa(&self) -> &dyn TargetIsa {
         self.isa.as_ref()
+    }
+
+    /// Return whether veriwasm is enabled.
+    pub fn veriwasm(&self) -> bool {
+        self.veriwasm
     }
 
     /// Return the target's frontend configuration settings.

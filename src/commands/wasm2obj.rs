@@ -70,11 +70,8 @@ impl WasmToObjCommand {
             self.common.enable_simd,
             self.common.opt_level(),
             self.common.debug_info,
+            self.common.enable_veriwasm,
         )?;
-
-        if self.common.enable_veriwasm{
-            veriwasm::wasmtime_test_hook();
-        }
 
         let mut file =
             File::create(Path::new(&self.output)).context("failed to create object file")?;

@@ -13,6 +13,7 @@ pub fn compile_to_obj(
     enable_simd: bool,
     opt_level: wasmtime::OptLevel,
     debug_info: bool,
+    enable_veriwasm: bool,
 ) -> Result<Object> {
     let isa_builder = match target {
         Some(target) => native::lookup(target.clone())?,
@@ -57,6 +58,7 @@ pub fn compile_to_obj(
             s => bail!("unknown compilation strategy {:?}", s),
         },
         tunables.clone(),
+        enable_veriwasm,
     );
 
     let environ = ModuleEnvironment::new(compiler.isa().frontend_config(), &tunables);
