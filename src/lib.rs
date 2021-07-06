@@ -22,6 +22,7 @@
         clippy::use_self
     )
 )]
+#![feature(weak_into_raw)]
 
 pub mod commands;
 mod obj;
