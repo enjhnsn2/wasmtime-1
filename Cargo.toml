@@ -82,6 +82,7 @@ members = [
   "crates/wasi-common",
   "crates/wasi-common/cap-std-sync",
   "crates/wasi-common/tokio",
+  "crates/veriwasm",
   "examples/fib-debug/wasm",
   "examples/wasi/wasm",
   "examples/tokio/wasm",
