@@ -13,3 +13,7 @@
 [submodule "crates/wasi-crypto/spec"]
 	path = crates/wasi-crypto/spec
 	url = https://github.com/WebAssembly/wasi-crypto.git
+[submodule "crates/veriwasm"]
+	path = crates/veriwasm
+	url = https://github.com/PLSysSec/veriwasm.git
+	branch = veracruz
