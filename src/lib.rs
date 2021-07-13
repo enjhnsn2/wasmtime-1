@@ -281,6 +281,10 @@ struct CommonOptions {
     /// Enable Cranelift's internal NaN canonicalization
     #[structopt(long)]
     enable_cranelift_nan_canonicalization: bool,
+
+    /// Enable VeriWasm verification of compiled code
+    #[structopt(long)]
+    enable_veriwasm: bool,
 }
 
 impl CommonOptions {
@@ -310,7 +314,8 @@ impl CommonOptions {
             .cranelift_opt_level(self.opt_level())
             .strategy(pick_compilation_strategy(self.cranelift, self.lightbeam)?)?
             .profiler(pick_profiling_strategy(self.jitdump, self.vtune)?)?
-            .cranelift_nan_canonicalization(self.enable_cranelift_nan_canonicalization);
+            .cranelift_nan_canonicalization(self.enable_cranelift_nan_canonicalization)
+            .enable_veriwasm(self.enable_veriwasm);
 
         self.enable_wasm_features(&mut config);
 
