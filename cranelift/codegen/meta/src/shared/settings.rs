@@ -113,6 +113,17 @@ pub(crate) fn define() -> SettingGroup {
         false,
     );
 
+
+    settings.add_bool(
+        "enable_veriwasm",
+        "Enable VeriWasm verifier.",
+        r#"
+            This checks that the machine code output is properly isolated. 
+            This is computationally expensive, so it is not enabled by default.
+        "#,
+        false,
+    );
+
     settings.add_bool(
         "enable_pinned_reg",
         "Enable the use of the pinned register.",
