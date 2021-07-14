@@ -171,7 +171,7 @@ impl Engine {
     ///
     /// [binary]: https://webassembly.github.io/spec/core/binary/index.html
     /// [text]: https://webassembly.github.io/spec/core/text/index.html
-    pub fn precompile_module(&self, bytes: &[u8]) -> Result<Vec<u8>> {
+    pub fn precompile_module(&self, bytes: &[u8], enable_veriwasm: bool) -> Result<Vec<u8>> {
         const USE_PAGED_MEM_INIT: bool = cfg!(all(feature = "uffd", target_os = "linux"));
 
         #[cfg(feature = "wat")]
@@ -181,6 +181,7 @@ impl Engine {
             &self.inner.compiler,
             &bytes,
             USE_PAGED_MEM_INIT,
+            enable_veriwasm,
         )?;
 
         crate::module::SerializedModule::from_artifacts(&self.inner.compiler, &artifacts, &types)

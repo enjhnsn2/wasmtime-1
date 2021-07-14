@@ -103,6 +103,7 @@ impl CompilationArtifacts {
         compiler: &Compiler,
         data: &[u8],
         use_paged_mem_init: bool,
+        enable_veriwasm: bool,
     ) -> Result<(usize, Vec<CompilationArtifacts>, TypeTables), SetupError> {
         let (main_module, translations, types) = ModuleEnvironment::new(
             compiler.frontend_config(),
@@ -118,7 +119,7 @@ impl CompilationArtifacts {
                     obj,
                     unwind_info,
                     funcs,
-                } = compiler.compile(&mut translation, &types)?;
+                } = compiler.compile(&mut translation, &types, enable_veriwasm)?;
 
                 let ModuleTranslation {
                     mut module,

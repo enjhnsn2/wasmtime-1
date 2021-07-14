@@ -64,6 +64,7 @@ impl WasmToObjCommand {
             self.common.enable_simd,
             self.common.opt_level(),
             self.common.debug_info,
+            self.common.enable_veriwasm,
         )?;
 
         let mut file =

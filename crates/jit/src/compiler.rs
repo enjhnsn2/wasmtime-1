@@ -134,6 +134,7 @@ impl Compiler {
         &self,
         translation: &mut ModuleTranslation,
         types: &TypeTables,
+        enable_veriwasm: bool,
     ) -> Result<Compilation, SetupError> {
         let functions = mem::take(&mut translation.function_body_inputs);
         let functions = functions.into_iter().collect::<Vec<_>>();
@@ -146,6 +147,7 @@ impl Compiler {
                     &*self.isa,
                     &self.tunables,
                     types,
+                    enable_veriwasm,
                 )
             })
             .collect::<Result<Vec<_>, _>>()?

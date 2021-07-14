@@ -104,6 +104,7 @@ use wasmtime_environ::{
     StackMapInformation, TrapInformation, Tunables, TypeTables,
 };
 
+
 mod func_environ;
 
 /// Implementation of a relocation sink that just saves all the information for later
@@ -351,6 +352,7 @@ impl Compiler for Cranelift {
         isa: &dyn isa::TargetIsa,
         tunables: &Tunables,
         types: &TypeTables,
+        enable_veriwasm: bool,
     ) -> Result<CompiledFunction, CompileError> {
         let module = &translation.module;
         let func_index = module.func_index(func_index);
@@ -439,6 +441,17 @@ impl Compiler for Cranelift {
         } else {
             None
         };
+
+        if enable_veriwasm {
+            if let Some((bbs, edges)) = context.get_code_bb_layout() {
+                veriwasm::validate_wasmtime_func(
+                    &code_buf[..],
+                    &bbs[..],
+                    &edges[..],
+                )
+                .map_err(|_| CompileError::VeriWasm(context.func.name.to_string()))?
+            }
+        }
 
         Ok(CompiledFunction {
             body: code_buf,

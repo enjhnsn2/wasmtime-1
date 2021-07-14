@@ -86,17 +86,13 @@ impl CompileCommand {
 
         let input = fs::read(&self.module).with_context(|| "failed to read input file")?;
 
-        if self.common.enable_veriwasm{
-            veriwasm::wasmtime_test_hook();
-        }
-
         let output = self.output.take().unwrap_or_else(|| {
             let mut output: PathBuf = self.module.file_name().unwrap().into();
             output.set_extension("cwasm");
             output
         });
 
-        fs::write(output, engine.precompile_module(&input)?)?;
+        fs::write(output, engine.precompile_module(&input, self.common.enable_veriwasm)?)?;
 
         Ok(())
     }

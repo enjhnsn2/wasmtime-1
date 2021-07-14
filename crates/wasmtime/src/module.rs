@@ -300,11 +300,11 @@ impl Module {
                     engine.cache_config(),
                 )
                 .get_data((engine.compiler(), binary), |(compiler, binary)| {
-                    CompilationArtifacts::build(compiler, binary, USE_PAGED_MEM_INIT)
+                    CompilationArtifacts::build(compiler, binary, USE_PAGED_MEM_INIT, false)
                 })?;
             } else {
                 let (main_module, artifacts, types) =
-                    CompilationArtifacts::build(engine.compiler(), binary, USE_PAGED_MEM_INIT)?;
+                    CompilationArtifacts::build(engine.compiler(), binary, USE_PAGED_MEM_INIT, false)?;
             }
         };
 

@@ -14,6 +14,7 @@ pub fn compile_to_obj(
     enable_simd: bool,
     opt_level: wasmtime::OptLevel,
     debug_info: bool,
+    enable_veriwasm: bool, 
 ) -> Result<Object> {
     let isa_builder = match target {
         Some(target) => native::lookup(target.clone())?,
@@ -69,6 +70,6 @@ pub fn compile_to_obj(
         .translate(wasm)
         .context("failed to translate module")?;
     assert_eq!(translation.len(), 1);
-    let compilation = compiler.compile(&mut translation[0], &types)?;
+    let compilation = compiler.compile(&mut translation[0], &types, enable_veriwasm)?;
     Ok(compilation.obj)
 }

@@ -900,7 +900,7 @@ impl Config {
     pub fn enable_veriwasm(&mut self, enable: bool) -> &mut Self {
         let val = if enable { "true" } else { "false" };
         self.flags
-            .set("enable_nan_canonicalization", val)
+            .set("enable_veriwasm", val)
             .expect("should be valid flag");
         self
     }

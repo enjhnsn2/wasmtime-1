@@ -91,6 +91,10 @@ pub enum CompileError {
     /// A compilation error occured.
     #[error("Debug info is not supported with this configuration")]
     DebugInfoNotSupported,
+
+    /// VeriWasm flagged something that might be a bug
+    #[error("VeriWasm verification error: {0}")]
+    VeriWasm(String),
 }
 
 /// An implementation of a compiler from parsed WebAssembly module to native
@@ -105,5 +109,6 @@ pub trait Compiler: Send + Sync {
         isa: &dyn isa::TargetIsa,
         tunables: &Tunables,
         types: &TypeTables,
+        enable_veriwasm: bool,
     ) -> Result<CompiledFunction, CompileError>;
 }
