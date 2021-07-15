@@ -97,7 +97,7 @@ use cranelift_codegen::{binemit, isa, Context};
 use cranelift_wasm::{DefinedFuncIndex, FuncIndex, FuncTranslator, SignatureIndex, WasmType};
 use std::convert::TryFrom;
 use std::sync::Mutex;
-use target_lexicon::CallingConvention;
+use target_lexicon::{CallingConvention, Architecture};
 use wasmtime_environ::{
     CompileError, CompiledFunction, Compiler, FunctionAddressMap, FunctionBodyData,
     InstructionAddressMap, Module, ModuleTranslation, Relocation, RelocationTarget,
@@ -443,13 +443,20 @@ impl Compiler for Cranelift {
         };
 
         if enable_veriwasm {
-            if let Some((bbs, edges)) = context.get_code_bb_layout() {
-                veriwasm::validate_wasmtime_func(
-                    &code_buf[..],
-                    &bbs[..],
-                    &edges[..],
-                )
-                .map_err(|_| CompileError::VeriWasm(context.func.name.to_string()))?
+            match isa.triple().architecture {
+                Architecture::X86_64 | Architecture::Aarch64 { .. } =>{
+                    if let Some((bbs, edges)) = context.get_code_bb_layout() {
+                        let name = context.func.name.to_string();
+                        veriwasm::validate_wasmtime_func(
+                            &code_buf[..],
+                            &bbs[..],
+                            &edges[..],
+                            isa.name(),
+                        )
+                        .map_err(|_| CompileError::VeriWasm(name))?
+                    }
+                }
+                _ => return Err(CompileError::VeriWasm(isa.name().to_string()))
             }
         }
 
