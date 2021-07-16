@@ -17,3 +17,6 @@
 	path = crates/veriwasm
 	url = https://github.com/PLSysSec/veriwasm.git
 	branch = veracruz
+[submodule "crates/capstone-rs"]
+	path = crates/capstone-rs
+	url = https://github.com/PLSysSec/capstone-rs.git
