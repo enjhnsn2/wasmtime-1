@@ -12,7 +12,8 @@ edition = "2018"
 
 [dependencies]
 arrayvec = "0.5"
-capstone = "0.9.0"
+#capstone = "0.9.0"
+capstone = { path = "../capstone-rs/capstone-rs" }
 cranelift-codegen = { path = "../../cranelift/codegen", version = "0.74.0" }
 derive_more = "0.99"
 dynasm = "1.0.0"
