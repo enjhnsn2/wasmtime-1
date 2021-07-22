@@ -473,7 +473,9 @@ impl<I: VCodeInst> VCode<I> {
 
     /// Emit the instructions to a `MachBuffer`, containing fixed-up code and external
     /// reloc/trap/etc. records ready for use.
-    pub fn emit(&self) -> (
+    pub fn emit(
+        &self,
+    ) -> (
         MachBuffer<I>,
         Vec<CodeOffset>,
         Vec<(CodeOffset, CodeOffset)>,

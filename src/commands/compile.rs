@@ -92,7 +92,10 @@ impl CompileCommand {
             output
         });
 
-        fs::write(output, engine.precompile_module(&input, self.common.enable_veriwasm)?)?;
+        fs::write(
+            output,
+            engine.precompile_module(&input, self.common.enable_veriwasm)?,
+        )?;
 
         Ok(())
     }

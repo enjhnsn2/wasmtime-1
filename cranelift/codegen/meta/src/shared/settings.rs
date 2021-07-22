@@ -113,7 +113,6 @@ pub(crate) fn define() -> SettingGroup {
         false,
     );
 
-
     settings.add_bool(
         "enable_veriwasm",
         "Enable VeriWasm verifier.",

@@ -14,7 +14,7 @@ pub fn compile_to_obj(
     enable_simd: bool,
     opt_level: wasmtime::OptLevel,
     debug_info: bool,
-    enable_veriwasm: bool, 
+    enable_veriwasm: bool,
 ) -> Result<Object> {
     let isa_builder = match target {
         Some(target) => native::lookup(target.clone())?,
