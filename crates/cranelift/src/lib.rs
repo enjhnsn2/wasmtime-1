@@ -451,6 +451,8 @@ impl Compiler for Cranelift {
                             &bbs[..],
                             &edges[..],
                             isa.name(),
+                            format!("{}", context.func.name),
+                            &func_env.offsets,
                         )
                         .map_err(|_| CompileError::VeriWasm(name))?
                     }
